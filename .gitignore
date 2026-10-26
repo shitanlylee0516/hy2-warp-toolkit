@@ -1,0 +1,31 @@
+# Private backups and archives
+*.tar.gz
+*.tgz
+*.zip
+backups/
+private*/
+
+# Private TLS keys and certificates
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.jks
+
+# Environment and node state credentials
+.env
+state.json
+connection.json
+config.json
+*.candidate.json
+secrets/
+
+# Python cache and temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# CLI logs and lock files
+*.log
+*.lock

@@ -1,0 +1,26 @@
+name: Offline checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Verify package hashes
+        run: sha256sum -c SHA256SUMS
+      - name: Syntax and embedded checks
+        run: |
+          bash -n install-hy2.sh
+          bash -n hy2-backup.sh
+          bash install-hy2.sh --self-test
+          bash hy2-backup.sh self-test
+      - name: Node identity and archive recovery checks
+        run: |
+          python3 test_tcp.py
+          python3 test_offline.py
+          python3 test_archive_independent.py hy2-backup.sh
+          python3 test_transactions.py hy2-backup.sh
